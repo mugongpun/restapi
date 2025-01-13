@@ -8,6 +8,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.annotation.Commit;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -33,6 +35,17 @@ class MemberRepositoryTest {
                                  .build();
             memberRepository.save(member);
         }
+    }
+    
+    @Test
+    void testRead() throws Exception {
+        //given(이런 데이터가 주어지면)
+        String userId = "user1";
+        //when(이걸 실행했을때)
+        Optional<Member> memberEntity = memberRepository.findByUserId(userId);
+        //then(결과예측)
+        System.out.println(memberEntity);
+        
     }
 
 }
