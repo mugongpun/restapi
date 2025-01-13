@@ -21,7 +21,8 @@ public class Member {
     @GeneratedValue
     private Long id;
 
-    private String userId;
+    @Column(unique = true)
+    private String mid;
 
     private String pwd;
 
