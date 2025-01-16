@@ -15,7 +15,8 @@ public class MemberTaskException extends RuntimeException{
 
         NOT_FOUND("NOT_FOUND", 404),
         DUPLICATE("DUPLICATE", 409),
-        INVALID("INVALID", 400),;
+        INVALID("INVALID", 400),
+        BAD_CREDENTIALS("BAD CREDENTIALS",401); //멤버 인증과정에서 일어나는 에러
 
         private String message;
         private int status;
