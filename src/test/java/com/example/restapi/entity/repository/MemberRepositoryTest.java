@@ -6,15 +6,12 @@ import jakarta.persistence.EntityManager;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class MemberRepositoryTest {
@@ -32,18 +29,18 @@ class MemberRepositoryTest {
     @Commit
     void testInsert() throws Exception {
         //given(이런 데이터가 주어지면)
-        for (int i = 1; i <= 10; i++) {
-            Member member = Member.builder()
-                                 .mid("user" + i)
-                                 .pwd(passwordEncoder.encode("1111"))
-                                 .name("user" + i)
-                                 .email("user" + i + "@aaa.com")
-                                 .role(i < 5 ? "USER" : "ADMIN")
-                                 .build();
+        for (int i =1; i <= 10; i++) {
+                Member member = Member.builder()
+                                      .mid("user" + i)
+                                      .pwd(passwordEncoder.encode("1111"))
+                                      .name("user" + i)
+                                      .email("user" + i + "@aaa.com")
+                                      .role(i < 5 ? "USER" : "ADMIN")
+                                      .build();
             memberRepository.save(member);
         }
     }
-    
+
     @Test
     void testRead() throws Exception {
         //given(이런 데이터가 주어지면)
@@ -52,7 +49,7 @@ class MemberRepositoryTest {
         Optional<Member> memberEntity = memberRepository.findByMid(userId);
         //then(결과예측)
         System.out.println(memberEntity);
-        
+
     }
 
     @Test
