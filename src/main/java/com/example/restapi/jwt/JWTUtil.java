@@ -17,6 +17,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+
+/**
+ * 토큰 생성 및 검증
+ */
 @Component
 public class JWTUtil {
     private KeyStore keystore;
@@ -64,7 +68,7 @@ public class JWTUtil {
                        .parseSignedClaims(token)
                        .getPayload();
         } catch (UnrecoverableKeyException | KeyStoreException | NoSuchAlgorithmException e) {
-            throw new CustomKeyStoreException("FAIL CREATE TOKEN", e);
+            throw new CustomKeyStoreException("FAIL VALIDATION TOKEN", e);
         }
     }
 

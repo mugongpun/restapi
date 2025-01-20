@@ -25,8 +25,9 @@ public class TokenController {
     public ResponseEntity<Map<String, String>> makeToken(@RequestBody MemberDTO memberDTO) {
         MemberDTO findMemberDTO = memberService.read(memberDTO.getMid(), memberDTO.getPwd());
         Map<String, Object> dataMap = findMemberDTO.getDataMap();
-        String accessToken = jwtUtil.creatToken(dataMap, 60);
-        return null;
+        String accessToken = jwtUtil.creatToken(dataMap, 10);
+        String refreshToken = jwtUtil.creatToken(Map.of("mid", memberDTO.getMid()), 60 * 24 * 7);
+        return ResponseEntity.ok(Map.of("accessToken", accessToken, "refreshToken", refreshToken));
 
     }
 }
