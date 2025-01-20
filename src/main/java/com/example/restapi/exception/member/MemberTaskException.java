@@ -1,5 +1,8 @@
 package com.example.restapi.exception.member;
 
+import lombok.Getter;
+
+@Getter
 public class MemberTaskException extends RuntimeException{
 
     private String message;

@@ -1,4 +1,4 @@
-package com.example.restapi.entity.repository;
+package com.example.restapi.repository;
 
 import com.example.restapi.entity.member.Member;
 import org.springframework.data.jpa.repository.JpaRepository;

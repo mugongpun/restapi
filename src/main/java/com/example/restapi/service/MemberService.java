@@ -2,7 +2,7 @@ package com.example.restapi.service;
 
 import com.example.restapi.dto.MemberDTO;
 import com.example.restapi.entity.member.Member;
-import com.example.restapi.entity.repository.MemberRepository;
+import com.example.restapi.repository.MemberRepository;
 import com.example.restapi.exception.member.MemberTaskException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +24,7 @@ public class MemberService {
     public MemberDTO read(String mid, String pwd) {
 
         Optional<Member> result = memberRepository.findByMid(mid);
-        Member findMember = result.orElseThrow(() -> MemberTaskException.Exceptions.NOT_FOUND.value());
+        Member findMember = result.orElseThrow(() -> MemberTaskException.Exceptions.BAD_CREDENTIALS.value());
         if (!encoder.matches(pwd, findMember.getPwd())) {
             throw MemberTaskException.Exceptions.BAD_CREDENTIALS.value();
         }
