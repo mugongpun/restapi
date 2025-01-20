@@ -1,5 +1,6 @@
 package com.example.restapi.jwt;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import jakarta.annotation.PostConstruct;
@@ -68,7 +69,9 @@ public class JWTUtil {
                        .parseSignedClaims(token)
                        .getPayload();
         } catch (UnrecoverableKeyException | KeyStoreException | NoSuchAlgorithmException e) {
-            throw new CustomKeyStoreException("FAIL VALIDATION TOKEN", e);
+            throw new CustomKeyStoreException(e.getMessage(), e);
+        } catch (ExpiredJwtException e) {
+            throw new CustomKeyStoreException("만료된 토큰입니다", e);
         }
     }
 

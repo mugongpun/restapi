@@ -1,4 +1,4 @@
-package com.example.restapi.config.security;
+package com.example.restapi.security;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
