@@ -1,6 +1,6 @@
 package com.example.restapi.jwt;
 
-import io.jsonwebtoken.ExpiredJwtException;
+import com.example.restapi.controller.ApiResponse;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import jakarta.annotation.PostConstruct;
@@ -32,16 +32,16 @@ public class JWTUtil {
         try {
             keystore = KeyStore.getInstance("PKCS12");
             InputStream fis = getClass().getClassLoader()
-                                        .getResourceAsStream("mykeystore.p12");
+                                        .getResourceAsStream("certificate.p12");
             keystore.load(fis, "restapi".toCharArray());
         } catch (KeyStoreException | CertificateException | NoSuchAlgorithmException | IOException e) {
             throw new CustomKeyStoreException("FAIL LOADING KEYSTORE", e);
         }
     }
 
-    public String creatToken(Map<String, Object> valueMap, int min) {
+    public String createToken(Map<String, Object> valueMap, int min) {
         try {
-            privateKey = (PrivateKey) keystore.getKey("mykey", "restapi".toCharArray());
+            privateKey = (PrivateKey) keystore.getKey("Mycert", "restapi".toCharArray());
         } catch (UnrecoverableKeyException | KeyStoreException | NoSuchAlgorithmException e) {
             throw new CustomKeyStoreException("FAIL CREATE TOKEN", e);
         }
@@ -62,24 +62,24 @@ public class JWTUtil {
 
     public Map<String, Object> validateToken(String token) {
         try {
-            PublicKey publicKey = (PublicKey) keystore.getKey("mykey", "restapi".toCharArray());
+            PublicKey publicKey = keystore.getCertificate("Mycert").getPublicKey();
+
             return Jwts.parser()
                        .verifyWith(publicKey)
                        .build()
                        .parseSignedClaims(token)
                        .getPayload();
-        } catch (UnrecoverableKeyException | KeyStoreException | NoSuchAlgorithmException e) {
+        } catch (KeyStoreException e) {
             throw new CustomKeyStoreException(e.getMessage(), e);
-        } catch (ExpiredJwtException e) {
-            throw new CustomKeyStoreException("만료된 토큰입니다", e);
         }
     }
 
     @ExceptionHandler(CustomKeyStoreException.class)
-    public ResponseEntity<Map<String, String>> handleJWTError(CustomKeyStoreException exception) {
+    public ResponseEntity<ApiResponse<Void>> handleJWTError(CustomKeyStoreException exception) {
         Map<String, String> response = new HashMap<>();
         response.put("error", exception.getMessage());
-        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                             .body(ApiResponse.failure(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR));
     }
 
 

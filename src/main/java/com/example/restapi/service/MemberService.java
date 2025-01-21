@@ -24,10 +24,18 @@ public class MemberService {
     public MemberDTO read(String mid, String pwd) {
 
         Optional<Member> result = memberRepository.findByMid(mid);
-        Member findMember = result.orElseThrow(() -> MemberTaskException.Exceptions.BAD_CREDENTIALS.value());
+        Member findMember = result.orElseThrow(() -> MemberTaskException.Exceptions.BAD_CREDENTIALS.createException());
         if (!encoder.matches(pwd, findMember.getPwd())) {
-            throw MemberTaskException.Exceptions.BAD_CREDENTIALS.value();
+            throw MemberTaskException.Exceptions.BAD_CREDENTIALS.createException();
         }
+        return new MemberDTO(findMember);
+    }
+
+    public MemberDTO getByMid(String mid) {
+        Member findMember = memberRepository.findByMid(mid)
+                                        .orElseThrow(() -> MemberTaskException.Exceptions.NOT_FOUND.createException());
+
+
         return new MemberDTO(findMember);
     }
 }

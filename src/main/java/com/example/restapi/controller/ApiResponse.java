@@ -8,7 +8,7 @@ public class ApiResponse<T> {
     private boolean success;
     private String message;
     private T data;
-    private int code;  // HTTP 상태 코드 (선택 사항)
+    private HttpStatus code;  // HTTP 상태 코드 (선택 사항)
 
     // 기본 생성자 (기본값 설정)
     public ApiResponse() {
@@ -19,14 +19,18 @@ public class ApiResponse<T> {
         this.success = true;
         this.message = message;
         this.data = data;
-        this.code = 200; // 기본적으로 성공 응답 (HTTP 200)
+        this.code = HttpStatus.OK; // 기본적으로 성공 응답 (HTTP 200)
     }
 
     // 실패 응답을 위한 생성자
-    public ApiResponse(String message, int code) {
+    public ApiResponse(String message, HttpStatus code) {
         this.success = false;
         this.message = message;
         this.code = code;
+    }
+
+    public ApiResponse(T data) {
+        this("Success", data);
     }
 
 
@@ -36,14 +40,10 @@ public class ApiResponse<T> {
     }
 
     public static <T> ApiResponse<T> success(T data) {
-        return new ApiResponse<>("Success", data);
-    }
-
-    public static ApiResponse<Void> failure(String message, int code) {
-        return new ApiResponse<>(message, code);
+        return new ApiResponse<>(data);
     }
 
     public static ApiResponse<Void> failure(String message, HttpStatus code) {
-        return new ApiResponse<>(message, code.value());
+        return new ApiResponse<>(message, code);
     }
 }

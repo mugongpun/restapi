@@ -3,17 +3,20 @@ spring:
     name: restapi
 
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/restapidb?serverTimezone=Asia/Seoul
-    username: restapiuser
-    password: restapiuser
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://localhost:3306/restapidb?serverTimezone=Asia/Seoul
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:tcp://localhost/~/restapi
+#    username: restapiuser
+#    password: restapiuser
     hikari:
       minimum-idle: 2
       maximum-pool-size: 5
+    username: sa
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         format_sql: true

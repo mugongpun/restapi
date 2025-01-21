@@ -6,11 +6,8 @@ import com.example.restapi.repository.MemberRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class JWTUtilTest {
@@ -26,7 +23,7 @@ class JWTUtilTest {
                                         .get();
         MemberDTO memberDTO = new MemberDTO(findMember);
         Map<String, Object> dataMap = memberDTO.getDataMap();
-        String token = jwtUtil.creatToken(dataMap, 60);
+        String token = jwtUtil.createToken(dataMap, 60);
         System.out.println(token);
 
     }

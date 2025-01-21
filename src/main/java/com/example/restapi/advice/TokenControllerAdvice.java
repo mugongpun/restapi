@@ -1,5 +1,7 @@
 package com.example.restapi.advice;
 
+import com.example.restapi.controller.ApiResponse;
+import com.example.restapi.exception.TokenTaskException;
 import com.example.restapi.exception.member.MemberTaskException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,20 +16,24 @@ import java.util.Map;
 public class TokenControllerAdvice {
 
     @ExceptionHandler(MemberTaskException.class)
-    public ResponseEntity<Map<String, String>> handleMemberTaskException(MemberTaskException ex) {
+    public ResponseEntity<ApiResponse<Void>> handleMemberTaskException(MemberTaskException ex) {
         String msg = ex.getMessage();
-        int status = ex.getStatus();
+        HttpStatus status = ex.getStatus();
 
         return ResponseEntity.status(status)
-                             .body(Map.of("error", msg));
+                             .body(ApiResponse.failure(msg, status));
     }
 
     //인증되지 않은 사용자의 접근시 발생 에러
     @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<?> handleAccessDeniedException(AccessDeniedException e) {
-        Map<String, Object> errors = new HashMap<>();
-        errors.put("message", e.getMessage());
-        return new ResponseEntity<>(errors, HttpStatus.FORBIDDEN);
+    public ResponseEntity<ApiResponse<Void>> handleAccessDeniedException(AccessDeniedException e) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                             .body(ApiResponse.failure(e.getMessage(), HttpStatus.FORBIDDEN));
     }
 
+    @ExceptionHandler(TokenTaskException.class)
+    public ResponseEntity<ApiResponse<Void>> handleTokenTaskException(TokenTaskException e) {
+        return ResponseEntity.status(e.getStatus())
+                             .body(ApiResponse.failure(e.getMessage(), e.getStatus()));
+    }
 }

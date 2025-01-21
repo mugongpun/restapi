@@ -61,7 +61,7 @@ class MemberRepositoryTest {
         String mid = "user1";
         //when(이걸 실행했을때)
         Optional<Member> result = memberRepository.findByMid(mid);
-        Member member = result.orElseThrow(() -> MemberTaskException.Exceptions.NOT_FOUND.value());
+        Member member = result.orElseThrow(() -> MemberTaskException.Exceptions.NOT_FOUND.createException());
         member.changeName("user1 수정");
         em.flush();
         em.clear();
@@ -81,7 +81,7 @@ class MemberRepositoryTest {
         String mid = "user10";
         //when(이걸 실행했을때)
         Optional<Member> byMid = memberRepository.findByMid(mid);
-        Member findMember = byMid.orElseThrow(MemberTaskException.Exceptions.NOT_FOUND::value);
+        Member findMember = byMid.orElseThrow(MemberTaskException.Exceptions.NOT_FOUND::createException);
         memberRepository.delete(findMember);
         //then(결과예측)
     }
