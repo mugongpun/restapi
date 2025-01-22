@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:h2:tcp://localhost/~/restapi
+    url: jdbc:h2:tcp://localhost/~/restapitest
     username: sa
     password:
     driver-class-name: org.h2.Driver
@@ -8,7 +8,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     properties:
       hibernate:
         format_sql: true
