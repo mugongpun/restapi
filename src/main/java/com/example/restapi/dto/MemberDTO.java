@@ -1,6 +1,6 @@
 package com.example.restapi.dto;
 
-import com.example.restapi.entity.member.Member;
+import com.example.restapi.entity.Member;
 import lombok.*;
 
 import java.time.LocalDateTime;

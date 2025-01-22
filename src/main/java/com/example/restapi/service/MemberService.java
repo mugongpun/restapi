@@ -1,7 +1,7 @@
 package com.example.restapi.service;
 
 import com.example.restapi.dto.MemberDTO;
-import com.example.restapi.entity.member.Member;
+import com.example.restapi.entity.Member;
 import com.example.restapi.repository.MemberRepository;
 import com.example.restapi.exception.member.MemberTaskException;
 import lombok.RequiredArgsConstructor;

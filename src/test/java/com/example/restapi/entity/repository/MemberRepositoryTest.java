@@ -1,6 +1,6 @@
 package com.example.restapi.entity.repository;
 
-import com.example.restapi.entity.member.Member;
+import com.example.restapi.entity.Member;
 import com.example.restapi.exception.member.MemberTaskException;
 import com.example.restapi.repository.MemberRepository;
 import jakarta.persistence.EntityManager;
