@@ -5,6 +5,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -15,6 +17,7 @@ import java.util.List;
 @Table(name = "orders")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@EntityListeners(AuditingEntityListener.class)
 public class Order {
 
     @Id
@@ -28,9 +31,10 @@ public class Order {
     @OneToMany(mappedBy = "order",cascade = CascadeType.ALL)
     private List<OrderProduct> orderProductList = new ArrayList<>(); //양방향
 
+    @CreatedDate
     private LocalDateTime orderDate;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
     public void changeMember(Member member) {
