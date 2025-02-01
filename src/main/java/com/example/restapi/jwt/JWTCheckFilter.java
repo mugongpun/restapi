@@ -9,11 +9,13 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
@@ -26,7 +28,7 @@ import java.util.stream.Collectors;
  * 필터
  */
 
-//@Component
+@Component
 @RequiredArgsConstructor
 @Slf4j
 public class JWTCheckFilter extends OncePerRequestFilter {
@@ -38,7 +40,7 @@ public class JWTCheckFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String headStr = request.getHeader("Authorization");
         if (headStr == null || !headStr.startsWith("Bearer ")) {
-            handleException(new Exception("ACCESS TOKEN NOT FOUND"));
+            handleException(response,new Exception("ACCESS TOKEN NOT FOUND"));
         }
 
         try {
@@ -57,7 +59,7 @@ public class JWTCheckFilter extends OncePerRequestFilter {
             context.setAuthentication(up);
             filterChain.doFilter(request, response);
         } catch (Exception e) {
-            handleException(e);
+            handleException(response, e);
         }
     }
 
@@ -66,14 +68,24 @@ public class JWTCheckFilter extends OncePerRequestFilter {
         if (request.getRequestURI().startsWith("api/token")) {
             return true;
         }
+        if (request.getRequestURI()
+                   .startsWith("/register")) {
+            return true;
+        }
+
+        if (request.getRequestURI()
+                   .startsWith("/order")) {
+            return true;
+        }
 
         return false;
     }
 
-    public ResponseEntity<Map<String, String>> handleException(Exception e){
-        HashMap<String, String> body = new HashMap<>();
-        body.put("error", e.getMessage());
-        return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                             .body(body);
+    //필터에서 발생하는 에러를 처리
+    public void handleException(HttpServletResponse response,Exception e){
+        response.setStatus(HttpStatus.BAD_REQUEST.value());
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+
+
     }
 }
