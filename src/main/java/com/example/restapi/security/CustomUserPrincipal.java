@@ -12,6 +12,6 @@ public class CustomUserPrincipal implements Principal {
 
     @Override
     public String getName() {
-        return "";
+        return this.mid;
     }
 }
