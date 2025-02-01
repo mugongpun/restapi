@@ -1,6 +1,5 @@
 package com.example.restapi.exception;
 
-import com.example.restapi.exception.member.MemberTaskException;
 import org.springframework.http.HttpStatus;
 
 public class TokenTaskException extends RuntimeException{
