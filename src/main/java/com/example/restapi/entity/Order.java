@@ -4,13 +4,11 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Entity
@@ -28,7 +26,7 @@ public class Order {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @OneToMany(mappedBy = "order",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderProduct> orderProductList = new ArrayList<>(); //양방향
 
     @CreatedDate
@@ -36,6 +34,26 @@ public class Order {
 
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
+
+    public static Order createOrder(Member member, OrderProduct... orderProducts) {
+        Order order = new Order();
+        order.changeMember(member);
+        for (OrderProduct orderProduct : orderProducts) {
+            order.addOrderProduct(orderProduct);
+        }
+        order.changeStatus(OrderStatus.ORDER);
+        return order;
+    }
+
+    public static Order createOrder(Member member, List<OrderProduct> orderProductList) {
+        Order order = new Order();
+        order.changeMember(member);
+        for (OrderProduct orderProduct : orderProductList) {
+            order.addOrderProduct(orderProduct);
+        }
+        order.changeStatus(OrderStatus.ORDER);
+        return order;
+    }
 
     public void changeMember(Member member) {
         this.member = member;
@@ -50,14 +68,17 @@ public class Order {
         orderProduct.changeOrder(this);
     }
 
-    public static Order createOrder(Member member, OrderProduct... orderProducts) {
-        Order order = new Order();
-        order.changeMember(member);
-        for (OrderProduct orderProduct : orderProducts) {
-            order.addOrderProduct(orderProduct);
+    //주문취소
+    public void cancel() {
+        this.status = OrderStatus.CANCEL; //주문 상태를 취소로 변경
+        for (OrderProduct orderProduct : orderProductList) {
+            orderProduct.cancel();
         }
-        order.changeStatus(OrderStatus.ORDER);
-        return order;
     }
 
+    public int getTotalPrice() {
+        return orderProductList.stream()
+                               .mapToInt(orderProduct -> orderProduct.getTotalPrice())
+                               .sum();
+    }
 }
