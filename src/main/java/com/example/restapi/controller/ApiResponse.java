@@ -3,6 +3,8 @@ package com.example.restapi.controller;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
 
+import java.util.List;
+
 @Data
 public class ApiResponse<T> {
     private boolean success;
@@ -29,6 +31,13 @@ public class ApiResponse<T> {
         this.code = code;
     }
 
+    public ApiResponse(String message, HttpStatus code, T data) {
+        this.success = false;
+        this.message = message;
+        this.code = code;
+        this.data = data;
+    }
+
     public ApiResponse(T data) {
         this("Success", data);
     }
@@ -45,5 +54,9 @@ public class ApiResponse<T> {
 
     public static ApiResponse<Void> failure(String message, HttpStatus code) {
         return new ApiResponse<>(message, code);
+    }
+
+    public static ApiResponse<List<ErrorDetail>> failure(String message, List<ErrorDetail> data, HttpStatus code) {
+        return new ApiResponse<>(message, code, data);
     }
 }
