@@ -1,6 +1,7 @@
 package com.example.restapi.dto;
 
 import com.example.restapi.entity.Member;
+import jakarta.validation.constraints.Email;
 import lombok.*;
 
 import java.time.LocalDateTime;
