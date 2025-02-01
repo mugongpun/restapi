@@ -1,9 +1,11 @@
 package com.example.restapi.exception;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 
 @NoArgsConstructor
+@Getter
 public class OrderTaskException extends RuntimeException {
 
     private String message;
@@ -22,8 +24,11 @@ public class OrderTaskException extends RuntimeException {
     }
 
     public enum Exceptions {
-        NOT_ENOUGH_STOCK_EXCEPTION("NEED MORE STOCK", HttpStatus.CONFLICT),
-        NEGATIVE_PRICE_EXCEPTION("Product price must be greater than or equal to zero", HttpStatus.BAD_REQUEST);
+        NOT_ENOUGH_STOCK_EXCEPTION("재고가 부족합니다", HttpStatus.CONFLICT),
+        NEGATIVE_PRICE_EXCEPTION("상품 가격은 0원보다 커야합니다", HttpStatus.BAD_REQUEST),
+        NOT_PRODUCT_LIST("주문 상품 리스트가 존재하지 않습니다", HttpStatus.CONFLICT),
+        NOT_FOUND_ORDER("존재하지 않는 주문입니다", HttpStatus.CONFLICT),
+        NOT_FOUND_ORDER_LIST("해당 아이디로 주문하신 내역이 없습니다",HttpStatus.BAD_REQUEST);
 
         private String message;
         private HttpStatus status;
@@ -33,7 +38,7 @@ public class OrderTaskException extends RuntimeException {
             this.status = status;
         }
 
-        public OrderTaskException value() {
+        public OrderTaskException createException() {
             return new OrderTaskException(message, status);
         }
     }
