@@ -1,7 +1,7 @@
 package com.example.restapi.entity.repository;
 
 import com.example.restapi.entity.Member;
-import com.example.restapi.exception.member.MemberTaskException;
+import com.example.restapi.exception.MemberTaskException;
 import com.example.restapi.repository.MemberRepository;
 import jakarta.persistence.EntityManager;
 import org.assertj.core.api.Assertions;
@@ -36,7 +36,7 @@ class MemberRepositoryTest {
                                       .pwd(passwordEncoder.encode("1111"))
                                       .name("user" + i)
                                       .email("user" + i + "@aaa.com")
-                                      .role(i < 5 ? "USER" : "ADMIN")
+                                      .role("user")
                                       .build();
             memberRepository.save(member);
         }

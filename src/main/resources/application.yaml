@@ -16,11 +16,12 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     properties:
       hibernate:
         format_sql: true
         use_sql_comments: true #실행되는 jpql을 보고싶을때
+        default_batch_fetch_size: 100 #N+1문제해결
 
 logging:
   level:
