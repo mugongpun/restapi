@@ -23,6 +23,15 @@ public class OrderProduct {
 
     private int count; //주문수량
 
+    public static OrderProduct createOrderProduct(Product product, int orderPrice, int count) {
+        OrderProduct orderProduct = new OrderProduct();
+        orderProduct.changeProduct(product);
+        orderProduct.changeOrderPrice(orderPrice);
+        orderProduct.changeCount(count);
+        product.removeStock(count);
+        return orderProduct;
+    }
+
     public void changeOrder(Order order) {
         this.order = order;
     }
@@ -45,15 +54,6 @@ public class OrderProduct {
 
     public int getTotalPrice() {
         return getOrderPrice() * getCount();
-    }
-
-    public static OrderProduct createOrderProduct(Product product, int orderPrice, int count) {
-        OrderProduct orderProduct = new OrderProduct();
-        orderProduct.changeProduct(product);
-        orderProduct.changeOrderPrice(orderPrice);
-        orderProduct.changeCount(count);
-        product.removeStock(count);
-        return orderProduct;
     }
 
 }

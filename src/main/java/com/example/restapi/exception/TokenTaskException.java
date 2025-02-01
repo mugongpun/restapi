@@ -2,7 +2,7 @@ package com.example.restapi.exception;
 
 import org.springframework.http.HttpStatus;
 
-public class TokenTaskException extends RuntimeException{
+public class TokenTaskException extends RuntimeException {
 
     private final String message;
     private final HttpStatus status;
@@ -30,7 +30,6 @@ public class TokenTaskException extends RuntimeException{
         INVALID_HOST("Invalid Host", HttpStatus.BAD_REQUEST),
         TOKEN_EXPIRED("Token has expired", HttpStatus.UNAUTHORIZED),
         TOKEN_EXPIRED_LOGIN_REQUIRED("Access and refresh tokens are expired. Please login again.", HttpStatus.UNAUTHORIZED);
-        ;
 
         private final String message;
         private final HttpStatus status;
