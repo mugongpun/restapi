@@ -168,4 +168,5 @@ gradle-app.setting
 # Java heap dump
 *.hprof
 
+src/test/java/com/example/restapi/prefixTest.java
 # End of https://www.toptal.com/developers/gitignore/api/intellij,java,gradle

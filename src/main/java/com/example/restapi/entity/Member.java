@@ -1,4 +1,4 @@
-package com.example.restapi.entity.member;
+package com.example.restapi.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -20,6 +20,9 @@ public class Member {
     @Id
     @GeneratedValue
     private Long id;
+
+    @Column(unique = true)
+    private String mid;
 
     private String pwd;
 
