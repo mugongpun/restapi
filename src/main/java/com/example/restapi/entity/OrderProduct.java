@@ -32,15 +32,15 @@ public class OrderProduct {
     }
 
     public void changeOrderPrice(int orderPrice) {
-        this.orderPrice = this.orderPrice;
+        this.orderPrice = orderPrice;
     }
 
     public void changeCount(int count) {
         this.count = count;
     }
 
-    public void cancel(int count) {
-        getProduct().addStock(count);
+    public void cancel() {
+        getProduct().addStock(this.count);
     }
 
     public int getTotalPrice() {
