@@ -9,6 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ResponseOrderProductDTO {
+
+    //주문 조회시 주문에 관련된 상품들을 DTO로 반환하기 위한 DTO
+
     private Long productId;
 
     private String name;
