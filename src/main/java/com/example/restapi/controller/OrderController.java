@@ -23,7 +23,7 @@ public class OrderController {
     @PostMapping()
     public ResponseEntity<ApiResponse<OrderDTO>> order(@RequestBody @Validated OrderRequestDTO orderRequestDTO) {
 //        if (principal.getName() != orderRequestDTO.getMid()) { 좀있다가 추가하기
-//            throw MemberTaskException.Exceptions.USERNAME_MISMATCH.createException();
+//            throw MemberTaskException.Exceptions.USERNAME_MISMATCH.get();
 //        }
         OrderDTO orderDTO = orderService.order(orderRequestDTO);
         return ResponseEntity.ok(ApiResponse.success(orderDTO));
@@ -33,7 +33,7 @@ public class OrderController {
     @PutMapping("/{orderId}")
     public ResponseEntity<ApiResponse<OrderDTO>> changeOrder(@PathVariable("orderId") Long orderId, @RequestBody OrderRequestDTO orderRequestDTO) {
         //        if (principal.getName() != orderRequestDTO.getMid()) { 좀있다가 추가하기
-//            throw MemberTaskException.Exceptions.USERNAME_MISMATCH.createException();
+//            throw MemberTaskException.Exceptions.USERNAME_MISMATCH.get();
 //        }
         OrderDTO updateOrderDto = orderService.updateOrder(orderId, orderRequestDTO);
         return ResponseEntity.ok(ApiResponse.success(updateOrderDto));

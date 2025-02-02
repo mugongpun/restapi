@@ -38,7 +38,7 @@ public class OrderTaskException extends RuntimeException {
             this.status = status;
         }
 
-        public OrderTaskException createException() {
+        public OrderTaskException get() {
             return new OrderTaskException(message, status);
         }
     }

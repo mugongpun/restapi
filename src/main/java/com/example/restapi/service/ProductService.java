@@ -20,7 +20,7 @@ public class ProductService {
     public Long save(ProductDTO productDTO) {
         //등록전 이미 있는 제품인지 확인
         if (productRepository.existsByName(productDTO.getName())) {
-            throw ProductTaskException.Exceptions.DUPLICATE_PRODUCT.createException();
+            throw ProductTaskException.Exceptions.DUPLICATE_PRODUCT.get();
         }
         Product savedProduct = productRepository.save(Product.createProduct(productDTO.getName(), productDTO.getPrice(), productDTO.getStockQuantity()));
         return savedProduct.getId();
@@ -29,7 +29,7 @@ public class ProductService {
     //상품 재고 수정
     public ProductDTO changeProductStock(Long productId, int quantity) {
         Optional<Product> byId = productRepository.findById(productId);
-        Product findProduct = byId.orElseThrow(() -> ProductTaskException.Exceptions.NOT_EXIST_PRODUCT.createException());
+        Product findProduct = byId.orElseThrow(() -> ProductTaskException.Exceptions.NOT_EXIST_PRODUCT.get());
         findProduct.changeStock(quantity);
         return new ProductDTO(findProduct);
     }
@@ -37,7 +37,7 @@ public class ProductService {
     //상품 수정
     public ProductDTO changeProduct(ProductDTO productDTO) {
         if (!productRepository.existsByName(productDTO.getName())) {
-            throw ProductTaskException.Exceptions.NOT_EXIST_PRODUCT.createException();
+            throw ProductTaskException.Exceptions.NOT_EXIST_PRODUCT.get();
         }
         Product findProduct = productRepository.findByName(productDTO.getName())
                                            .get();
@@ -46,13 +46,13 @@ public class ProductService {
 
     public void deleteProduct(Long productId) {
         Product findProduct = productRepository.findById(productId)
-                                               .orElseThrow(() -> ProductTaskException.Exceptions.NOT_EXIST_PRODUCT.createException());
+                                               .orElseThrow(() -> ProductTaskException.Exceptions.NOT_EXIST_PRODUCT.get());
         productRepository.delete(findProduct);
     }
 
     public void deleteProduct(String productName) {
         Product findProduct = productRepository.findByName(productName)
-                                           .orElseThrow(() -> ProductTaskException.Exceptions.NOT_EXIST_PRODUCT.createException());
+                                           .orElseThrow(() -> ProductTaskException.Exceptions.NOT_EXIST_PRODUCT.get());
         productRepository.delete(findProduct);
     }
 }

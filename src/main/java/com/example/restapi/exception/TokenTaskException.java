@@ -39,7 +39,7 @@ public class TokenTaskException extends RuntimeException {
             this.status = status;
         }
 
-        public TokenTaskException createException() {
+        public TokenTaskException get() {
             return new TokenTaskException(message, status);
         }
     }

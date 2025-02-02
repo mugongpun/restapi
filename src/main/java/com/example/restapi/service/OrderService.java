@@ -14,11 +14,9 @@ import com.example.restapi.repository.MemberRepository;
 import com.example.restapi.repository.OrderRepository;
 import com.example.restapi.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -36,7 +34,7 @@ public class OrderService {
     public OrderDTO order(OrderRequestDTO orderRequestDTO) {
         List<OrderProductDTO> orderProductDTOList = orderRequestDTO.getOrderProductDTOList();
         if (orderProductDTOList.isEmpty()) {
-            throw OrderTaskException.Exceptions.NOT_PRODUCT_LIST.createException();
+            throw OrderTaskException.Exceptions.NOT_PRODUCT_LIST.get();
         }
         /**
          * 1. 상품이 존재하는지 확인 (existsBy) -> 없으면 오류발생
@@ -47,14 +45,14 @@ public class OrderService {
         List<OrderProduct> orderProductList = orderProductDTOList.stream()
                                                         .map(orderProductDTO -> {
                                                             Product findProduct = productRepository.findById(orderProductDTO.getProductId())
-                                                                                                   .orElseThrow(() -> ProductTaskException.Exceptions.NOT_EXIST_PRODUCT.createException());
+                                                                                                   .orElseThrow(() -> ProductTaskException.Exceptions.NOT_EXIST_PRODUCT.get());
                                                             OrderProduct orderProduct = OrderProduct.createOrderProduct(findProduct, findProduct.getPrice(), orderProductDTO.getQuantity());
                                                             return orderProduct;
                                                         })
                                                         .collect(Collectors.toList());
 
         Member findMember = memberRepository.findByMid(orderRequestDTO.getMid())
-                                        .orElseThrow(() -> MemberTaskException.Exceptions.NOT_FOUND.createException());
+                                        .orElseThrow(() -> MemberTaskException.Exceptions.NOT_FOUND.get());
         Order savedOrder = orderRepository.save(Order.createOrder(findMember, orderProductList));
             return new OrderDTO(savedOrder);
     }
@@ -65,7 +63,7 @@ public class OrderService {
          * 2. 기존 주문을 취소 -> 업데이트된 주문 내역으로 다시 주문하는 로직
          */
         Order findOrder = orderRepository.findById(orderId)
-                                     .orElseThrow(() -> OrderTaskException.Exceptions.NOT_FOUND_ORDER.createException());
+                                     .orElseThrow(() -> OrderTaskException.Exceptions.NOT_FOUND_ORDER.get());
         findOrder.cancel();
 
         return order(orderRequestDTO);
@@ -74,7 +72,7 @@ public class OrderService {
     //주문취소
     public void cancelOrder(Long orderId) {
         Order findOrder = orderRepository.findById(orderId)
-                                         .orElseThrow(() -> OrderTaskException.Exceptions.NOT_FOUND_ORDER.createException());
+                                         .orElseThrow(() -> OrderTaskException.Exceptions.NOT_FOUND_ORDER.get());
 
         findOrder.cancel();
     }
@@ -86,7 +84,7 @@ public class OrderService {
         List<Order> orderList = orderRepository.findOrderByMemberMid(mid);
         List<OrderDTO> orderDTOList = new ArrayList<>();
         if (orderList.size() == 0 || orderList.isEmpty()) {
-            throw OrderTaskException.Exceptions.NOT_FOUND_ORDER_LIST.createException();
+            throw OrderTaskException.Exceptions.NOT_FOUND_ORDER_LIST.get();
         }
 
         List<OrderDTO> list = orderList.stream()

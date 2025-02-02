@@ -37,13 +37,13 @@ public class TokenController {
         log.info("refresh-token = {}", refreshToken);
 
         if (accessTokenStr == null || !accessTokenStr.startsWith("Bearer ")) {
-            throw TokenTaskException.Exceptions.NO_ACCESS_TOKEN.createException();
+            throw TokenTaskException.Exceptions.NO_ACCESS_TOKEN.get();
         }
         if (refreshToken == null) {
-            throw TokenTaskException.Exceptions.NO_REFRESH_TOKEN.createException();
+            throw TokenTaskException.Exceptions.NO_REFRESH_TOKEN.get();
         }
         if (mid == null) {
-            throw TokenTaskException.Exceptions.NO_MID.createException();
+            throw TokenTaskException.Exceptions.NO_MID.get();
         }
         String accessToken = accessTokenStr.substring(7);
         try {
@@ -64,7 +64,7 @@ public class TokenController {
             Map<String, Object> midClaims = jwtUtil.validateToken(refreshToken);
             if (!mid.equals(midClaims.get("mid")
                                      .toString())) {
-                throw TokenTaskException.Exceptions.INVALID_HOST.createException();
+                throw TokenTaskException.Exceptions.INVALID_HOST.get();
             }
             MemberDTO MemberDTO = memberService.getByMid(mid);
             Map<String, Object> claims = MemberDTO.getDataMap();
@@ -73,7 +73,7 @@ public class TokenController {
             return ResponseEntity.ok(ApiResponse.success(new TokenResponseDTO(accessToken, newRefreshToken)));
         } catch (ExpiredJwtException e) {
             //refreshToken도 만료되었을때는
-            throw TokenTaskException.Exceptions.TOKEN_EXPIRED_LOGIN_REQUIRED.createException();
+            throw TokenTaskException.Exceptions.TOKEN_EXPIRED_LOGIN_REQUIRED.get();
         }
     }
 }

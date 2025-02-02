@@ -29,7 +29,7 @@ public class Product {
     public void removeStock(int quantity) {
         int restStock = this.stockQuantity - quantity;
         if (restStock < 0) {
-            throw OrderTaskException.Exceptions.NOT_ENOUGH_STOCK_EXCEPTION.createException();
+            throw OrderTaskException.Exceptions.NOT_ENOUGH_STOCK_EXCEPTION.get();
         }
         this.stockQuantity = restStock;
     }
@@ -40,7 +40,7 @@ public class Product {
 
     public void changeProduct(int price, String name, int stockQuantity) {
         if (price <= 0) {
-            throw OrderTaskException.Exceptions.NEGATIVE_PRICE_EXCEPTION.createException();
+            throw OrderTaskException.Exceptions.NEGATIVE_PRICE_EXCEPTION.get();
         }
         this.price = price;
         this.name = name;

@@ -40,7 +40,7 @@ public class MemberTaskException extends RuntimeException{
             this.status = status;
         }
 
-        public MemberTaskException createException() {
+        public MemberTaskException get() {
             return new MemberTaskException(message, status);
         }
     }

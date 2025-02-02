@@ -29,7 +29,7 @@ public class ProductTaskException extends RuntimeException{
             this.status = status;
         }
 
-        public ProductTaskException createException() {
+        public ProductTaskException get() {
             return new ProductTaskException(message, status);
         }
     }

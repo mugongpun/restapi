@@ -25,16 +25,16 @@ public class MemberService {
     public MemberDTO read(String mid, String pwd) {
 
         Optional<Member> result = memberRepository.findByMid(mid);
-        Member findMember = result.orElseThrow(() -> MemberTaskException.Exceptions.BAD_CREDENTIALS.createException());
+        Member findMember = result.orElseThrow(() -> MemberTaskException.Exceptions.BAD_CREDENTIALS.get());
         if (!encoder.matches(pwd, findMember.getPwd())) {
-            throw MemberTaskException.Exceptions.BAD_CREDENTIALS.createException();
+            throw MemberTaskException.Exceptions.BAD_CREDENTIALS.get();
         }
         return new MemberDTO(findMember);
     }
 
     public MemberDTO getByMid(String mid) {
         Member findMember = memberRepository.findByMid(mid)
-                                            .orElseThrow(() -> MemberTaskException.Exceptions.NOT_FOUND.createException());
+                                            .orElseThrow(() -> MemberTaskException.Exceptions.NOT_FOUND.get());
 
 
         return new MemberDTO(findMember);
@@ -44,7 +44,7 @@ public class MemberService {
         String mid = memberRegisterDTO.getMid();
         if (memberRepository.findByMid(mid)
                             .isPresent()) {
-            throw MemberTaskException.Exceptions.DUPLICATE_VALUE.createException();
+            throw MemberTaskException.Exceptions.DUPLICATE_VALUE.get();
         }
         Member member = Member.builder()
                               .mid(memberRegisterDTO.getMid())
