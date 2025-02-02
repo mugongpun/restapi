@@ -52,11 +52,15 @@ public class ApiResponse<T> {
         return new ApiResponse<>(data);
     }
 
+    public static <T> ApiResponse<T> success(ResponseMessage message, T data) {
+        return new ApiResponse<>(message.getMessage(), data);
+    }
+
     public static ApiResponse<Void> failure(String message, HttpStatus code) {
         return new ApiResponse<>(message, code);
     }
 
-    public static ApiResponse<List<ErrorDetail>> failure(String message, List<ErrorDetail> data, HttpStatus code) {
+    public static <T> ApiResponse<T> failure(String message, T data, HttpStatus code) {
         return new ApiResponse<>(message, code, data);
     }
 }

@@ -19,9 +19,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -68,13 +66,12 @@ public class JWTCheckFilter extends OncePerRequestFilter {
         if (request.getRequestURI().startsWith("api/token")) {
             return true;
         }
-        if (request.getRequestURI()
-                   .startsWith("/register")) {
-            return true;
-        }
-
-        if (request.getRequestURI()
-                   .startsWith("/order")) {
+        List<String> list = new ArrayList<>();
+        list.add("/register");
+        list.add("/order");
+        list.add("/product");
+        if (list.stream().anyMatch(prefix -> request.getRequestURI()
+                                                    .startsWith(prefix))) {
             return true;
         }
 
