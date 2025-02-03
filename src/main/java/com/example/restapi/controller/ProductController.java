@@ -21,9 +21,7 @@ public class ProductController {
     public ResponseEntity<ApiResponse<List<ProductDTO>>> findAll() {
         List<Product> productList = productService.findAll();
         List<ProductDTO> list = productList.stream()
-                                           .map(product -> {
-                                               return new ProductDTO(product);
-                                           })
+                                           .map(product -> new ProductDTO(product))
                                            .toList();
         return ResponseEntity.ok(ApiResponse.success(list));
     }

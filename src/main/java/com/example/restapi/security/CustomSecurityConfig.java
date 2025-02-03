@@ -34,7 +34,7 @@ public class CustomSecurityConfig {
         httpSecurity.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.NEVER));
 
         //jwtCheckFilter를 usernamePasswordAuthenticationFilter 앞에 두기
-        httpSecurity.addFilterBefore(jwtCheckFilter, UsernamePasswordAuthenticationFilter.class);
+//        httpSecurity.addFilterBefore(jwtCheckFilter, UsernamePasswordAuthenticationFilter.class);
         return httpSecurity.build();
     }
 }

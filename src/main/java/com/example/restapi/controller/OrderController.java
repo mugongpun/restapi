@@ -3,13 +3,10 @@ package com.example.restapi.controller;
 import com.example.restapi.dto.OrderDTO;
 import com.example.restapi.dto.OrderRequestDTO;
 import com.example.restapi.service.OrderService;
-import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.security.Principal;
 
 @RestController()
 @RequestMapping("/order")

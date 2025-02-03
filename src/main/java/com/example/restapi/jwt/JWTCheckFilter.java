@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
  * 필터
  */
 
-@Component
+//@Component
 @RequiredArgsConstructor
 @Slf4j
 public class JWTCheckFilter extends OncePerRequestFilter {
@@ -67,7 +67,7 @@ public class JWTCheckFilter extends OncePerRequestFilter {
             return true;
         }
         List<String> list = new ArrayList<>();
-        list.add("/register");
+        list.add("/member");
         list.add("/order");
         list.add("/product");
         if (list.stream().anyMatch(prefix -> request.getRequestURI()
