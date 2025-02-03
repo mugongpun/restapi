@@ -19,7 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class CustomSecurityConfig {
 
-    private final JWTCheckFilter jwtCheckFilter;
+//    private final JWTCheckFilter jwtCheckFilter;
 
     @Bean
     public PasswordEncoder passwordEncoder() {

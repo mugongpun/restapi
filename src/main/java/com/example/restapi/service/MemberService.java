@@ -56,4 +56,29 @@ public class MemberService {
         Member savedMember = memberRepository.save(member);
         return savedMember.getMid();
     }
+
+    public MemberDTO update(MemberDTO memberUpdateDTO) {
+        Member member = memberRepository.findByMid(memberUpdateDTO.getMid())
+                                        .orElseThrow(
+                                                () -> MemberTaskException.Exceptions.NOT_FOUND.get()
+                                        );
+        if (!encoder.matches(memberUpdateDTO.getPwd(), member.getPwd())) {
+            throw MemberTaskException.Exceptions.BAD_CREDENTIALS.get();
+        }
+        member.changeEmail(memberUpdateDTO.getEmail());
+        member.changePassword(encoder.encode(memberUpdateDTO.getPwd()));
+        member.changeName(memberUpdateDTO.getName());
+        return new MemberDTO(member);
+    }
+
+    public void delete(MemberDTO memberDeleteDTO) {
+        Member member = memberRepository.findByMid(memberDeleteDTO.getMid())
+                                        .orElseThrow(
+                                                () -> MemberTaskException.Exceptions.NOT_FOUND.get()
+                                        );
+        if (!encoder.matches(memberDeleteDTO.getPwd(), member.getPwd())) {
+            throw MemberTaskException.Exceptions.BAD_CREDENTIALS.get();
+        }
+        memberRepository.delete(member);
+    }
 }

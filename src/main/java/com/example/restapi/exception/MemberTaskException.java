@@ -26,7 +26,7 @@ public class MemberTaskException extends RuntimeException{
 
     public static enum Exceptions {
 
-        NOT_FOUND("NOT_FOUND", HttpStatus.NOT_FOUND),
+        NOT_FOUND("존재하는 회원이 아닙니다", HttpStatus.NOT_FOUND),
         INVALID("INVALID", HttpStatus.BAD_REQUEST),
         BAD_CREDENTIALS("BAD CREDENTIALS",HttpStatus.UNAUTHORIZED),
         DUPLICATE_VALUE("이미 존재하는 회원입니다", HttpStatus.CONFLICT),
