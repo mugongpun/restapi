@@ -1,8 +1,9 @@
 package com.example.restapi.jwt;
 
-import com.example.restapi.dto.MemberDTO;
-import com.example.restapi.entity.Member;
-import com.example.restapi.repository.MemberRepository;
+import com.example.restapi.Member.dto.MemberDTO;
+import com.example.restapi.Member.domain.Member;
+import com.example.restapi.Member.repository.MemberRepository;
+import com.example.restapi.global.jwt.JWTUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

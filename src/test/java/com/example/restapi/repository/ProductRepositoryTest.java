@@ -1,6 +1,7 @@
 package com.example.restapi.repository;
 
-import com.example.restapi.entity.Product;
+import com.example.restapi.Product.domain.Product;
+import com.example.restapi.Product.repository.ProductRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;

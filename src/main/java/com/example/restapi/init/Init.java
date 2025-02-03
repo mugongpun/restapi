@@ -1,9 +1,9 @@
 package com.example.restapi.init;
 
-import com.example.restapi.entity.Member;
-import com.example.restapi.entity.Product;
-import com.example.restapi.repository.MemberRepository;
-import com.example.restapi.repository.ProductRepository;
+import com.example.restapi.Member.domain.Member;
+import com.example.restapi.Product.domain.Product;
+import com.example.restapi.Member.repository.MemberRepository;
+import com.example.restapi.Product.repository.ProductRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;

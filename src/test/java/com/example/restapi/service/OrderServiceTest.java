@@ -1,15 +1,17 @@
 package com.example.restapi.service;
 
-import com.example.restapi.dto.MemberRegisterDTO;
-import com.example.restapi.dto.OrderDTO;
-import com.example.restapi.dto.OrderProductDTO;
-import com.example.restapi.dto.OrderRequestDTO;
-import com.example.restapi.entity.Member;
-import com.example.restapi.entity.Order;
-import com.example.restapi.entity.OrderProduct;
-import com.example.restapi.entity.Product;
-import com.example.restapi.repository.MemberRepository;
-import com.example.restapi.repository.ProductRepository;
+import com.example.restapi.Member.dto.MemberRegisterDTO;
+import com.example.restapi.Member.service.MemberService;
+import com.example.restapi.Order.dto.OrderDTO;
+import com.example.restapi.Order.service.OrderService;
+import com.example.restapi.OrderProduct.dto.OrderProductDTO;
+import com.example.restapi.Order.dto.OrderRequestDTO;
+import com.example.restapi.Member.domain.Member;
+import com.example.restapi.Order.domain.Order;
+import com.example.restapi.OrderProduct.domain.OrderProduct;
+import com.example.restapi.Product.domain.Product;
+import com.example.restapi.Member.repository.MemberRepository;
+import com.example.restapi.Product.repository.ProductRepository;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,8 +22,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional

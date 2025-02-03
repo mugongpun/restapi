@@ -1,8 +1,8 @@
 package com.example.restapi.entity.repository;
 
-import com.example.restapi.entity.Member;
-import com.example.restapi.exception.MemberTaskException;
-import com.example.restapi.repository.MemberRepository;
+import com.example.restapi.Member.domain.Member;
+import com.example.restapi.global.exception.MemberTaskException;
+import com.example.restapi.Member.repository.MemberRepository;
 import jakarta.persistence.EntityManager;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
