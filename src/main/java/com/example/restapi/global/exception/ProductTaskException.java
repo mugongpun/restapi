@@ -1,7 +1,8 @@
 package com.example.restapi.global.exception;
 
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
-
+@Getter
 public class ProductTaskException extends RuntimeException{
     private String message;
     private HttpStatus status;
@@ -20,7 +21,8 @@ public class ProductTaskException extends RuntimeException{
 
     public enum Exceptions {
         DUPLICATE_PRODUCT("이미 존재하는 상품입니다", HttpStatus.CONFLICT),
-        NOT_EXIST_PRODUCT("존재하지 않는 상품입니다", HttpStatus.NOT_FOUND);
+        NOT_EXIST_PRODUCT("존재하지 않는 상품입니다", HttpStatus.NOT_FOUND),
+        UPLOAD_NOT_SUPPORT("지원되지 않는 파일 형식입니다",HttpStatus.BAD_REQUEST);
         private String message;
         private HttpStatus status;
 
