@@ -1,4 +1,9 @@
 spring:
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 2MB
+      max-request-size: 2MB
   application:
     name: restapi
 
@@ -26,6 +31,10 @@ spring:
 logging:
   level:
     org.springframework.security.web: TRACE
+
+shop:
+  upload:
+    path: upload
 
 
 

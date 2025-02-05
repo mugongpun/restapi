@@ -18,7 +18,11 @@ class ProductRepositoryTest {
     @Test
     void 상품_저장() throws Exception {
         //given(이런 데이터가 주어지면)
-        Product product1 = Product.createProduct("상품1", 1000, 10);
+        Product product1 = Product.builder()
+                                  .price(1000)
+                                  .name("hi")
+                                  .stockQuantity(10)
+                                  .build();
         //when(이걸 실행했을때)
         productRepository.save(product1);
         //then(결과예측)

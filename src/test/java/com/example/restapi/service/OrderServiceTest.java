@@ -44,8 +44,16 @@ class OrderServiceTest {
         Member member = memberRepository.findByMid("user1")
                                         .get();
 
-        Product product1 = Product.createProduct("product 1", 1000, 10);
-        Product product2 = Product.createProduct("product 2", 2000, 40);
+        Product product1 = Product.builder()
+                                  .name("product1")
+                                  .price(1000)
+                                  .stockQuantity(30)
+                                  .build();
+        Product product2 = Product.builder()
+                                  .name("product2")
+                                  .price(1000)
+                                  .stockQuantity(30)
+                                  .build();
         em.persist(product1);
         em.persist(product2);
 
@@ -63,7 +71,11 @@ class OrderServiceTest {
         MemberRegisterDTO memberRegisterDTO = new MemberRegisterDTO("user1", "1111", "aaa@gmail.com", "test1");
         memberService.register(memberRegisterDTO);
         for (int i = 0; i < 30; i++) {
-            Product product = Product.createProduct("상품번호" + (i + 1), 1000 + i + 1, 30);
+            Product product = Product.builder()
+                                   .name("상품이름" + i)
+                                   .stockQuantity(10 + i)
+                                   .price(1000 + i)
+                                   .build();
             productRepository.save(product);
         }
     }

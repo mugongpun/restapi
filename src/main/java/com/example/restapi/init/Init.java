@@ -34,7 +34,10 @@ public class Init {
         public void init() {
 
             for (int i = 0; i < 30; i++) {
-                Product product = Product.createProduct("상품번호" + (i + 1), 1000 + i + 1, 30);
+                Product product = Product.builder()
+                                       .price(1000 + i)
+                                       .name("상품 이름" + i)
+                                       .build();
                 productRepository.save(product);
             }
 
