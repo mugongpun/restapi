@@ -1,6 +1,8 @@
 package com.example.restapi.global.jwt;
 
+import com.example.restapi.global.ApiResponse;
 import com.example.restapi.global.security.CustomUserPrincipal;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -77,10 +79,19 @@ public class JWTCheckFilter extends OncePerRequestFilter {
     }
 
     //필터에서 발생하는 에러를 처리
-    public void handleException(HttpServletResponse response,Exception e){
+    public void handleException(HttpServletResponse response,Exception e) {
         response.setStatus(HttpStatus.BAD_REQUEST.value());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 
-
+        ApiResponse<Void> failure = ApiResponse.failure(e.getMessage(), HttpStatus.BAD_REQUEST);
+        try {
+            String json = objectMapper.writeValueAsString(failure);
+            response.getWriter()
+                    .write(json);
+        } catch (JsonProcessingException exception) {
+            exception.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 }
