@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.List;
 
-@RestControllerAdvice(assignableTypes = {MemberController.class, OrderController.class})
+@RestControllerAdvice
 public class MemberControllerAdvice {
     //회원가입 bean validation
     @ExceptionHandler(MethodArgumentNotValidException.class)

@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class ProductControllerAdvice {
 
     @ExceptionHandler(ProductTaskException.class)
-    public ResponseEntity<ApiResponse<ErrorDetail>> handleProductException() {
-        return null;
+    public ResponseEntity<ApiResponse<Void>> handleProductException(ProductTaskException ex) {
+
+        return ResponseEntity.status(ex.getStatus())
+                             .body(ApiResponse.failure(ex.getMessage(), ex.getStatus()));
     }
 }
