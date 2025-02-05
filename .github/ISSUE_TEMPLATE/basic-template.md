@@ -1,5 +1,5 @@
 ---
-name: 기본 템플릿
+name: basic template
 about: Describe this issue template's purpose here.
 title: ''
 labels: ''
